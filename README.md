@@ -73,7 +73,7 @@ To avoid repeating commonly used type-casting, RGFW defines macros to handle com
 
 You might notice two common arguments in these functions `id, SEL`
 
-The [`id`](https://developer.apple.com/documentation/objectivec/id) argument refers to an ID to an Objective C object or class. 
+The [`id`](https://developer.apple.com/documentation/objectivec/id) argument refers to an ID of an Objective C object or class. 
 
 [`SEL`](https://developer.apple.com/documentation/objectivec/sel) refers to the function's selector. 
 
@@ -94,7 +94,7 @@ To get the selector for an Objective-C function you must use [`sel_registerName`
 
 To use this, you may need to understand the syntax of an Objective-C function.
 
-The syntax is like this `<function-name>`, then `:` is used as a place holder for an argument.
+The syntax is like this `<function-name>`, then `:` is used as a placeholder for an argument.
 
 For example, a function with one argument would look like this:
 
@@ -111,7 +111,7 @@ If the function has multiple arguments you will have to also add the argument na
 To define a class method (eg. a callback function for the object) you must use [`class_addMethod`](https://developer.apple.com/documentation/objectivec/1418901-class_addmethod) this function takes the [delegate class](https://developer.apple.com/documentation/uikit/uisceneconfiguration/3197948-delegateclass?changes=_4) (class of the object that is calling's [delegate](https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/DelegatesandDataSources/DelegatesandDataSources.html) 
 ), selector of the function being called, the function you want to be called, and the arguments expected in string format.
 
-But first, you must allocate the delegate class in order to access it.
+But first, you must allocate the delegate class to access it.
 You can do this using [`objc_allocateClassPair`](https://developer.apple.com/documentation/objectivec/1418559-objc_allocateclasspair).
 
 For example to allocate the delegate class for an NSWindow: 
@@ -151,7 +151,7 @@ You can get the instance variable of an object via [`object_getInstanceVariable`
 ```c
 RGFW_window* win = NULL;
 
-// the object variable would be called "self" in a callback
+//The object variable would be called "self" in a callback
 object_getInstanceVariable(self, "RGFW_window", (void*)&win);
 ```
 
@@ -186,7 +186,7 @@ typedef id NSApplication;
 
 As for the enums, here are some of the enums I will be using in this tutorial.
 
-Many of the other enums can be found in Cocoa's headers, documentation or in RGF.h or Silicon.h.
+Many of the other enums can be found in Cocoa's headers, documentation, RGFW.h, or Silicon. h.
 
 ```c
 /* this macro is used to give an enum a type */ 
@@ -326,18 +326,13 @@ First, some library headers are required.
 #include <string.h>
 ```
 
-There are also declare some functions that will be defined later.
-
 These functions will be used for printing information about the current event.
 
 ```c
 const char* NSEventTypeToChar(NSEventType eventType);
 const char* NSEventModifierFlagsToChar(NSEventModifierFlags modifierFlags);
-```
 
-These will be placed after the main function and will be defined like this:
-
-```c
+// These will be placed after the main function and will be defined like this:
 const char* NSEventTypeToChar(NSEventType eventType) {
   	switch (eventType) {
 		case NSEventTypeLeftMouseDown: return "LeftMouseDown";
@@ -391,7 +386,7 @@ const char* NSEventModifierFlagsToChar(NSEventModifierFlags modifierFlags) {
 ```
 
 Cocoa does not handle certain events using the event loop. 
-Instead they're fed to the NSWindow via callbacks.
+Instead, they're fed to the NSWindow via callbacks.
 
 Here's how these functions will be defined for this example:
 
