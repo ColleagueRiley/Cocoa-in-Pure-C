@@ -149,9 +149,9 @@ object_getInstanceVariable(self, "RGFW_window", (void*)&win);
 ```
 
 ## Defining Cocoa Types
-Those were the basics of using Objective-C functions in Pure C, but that's still not enough to use the Cocoa API because the Cocoa header files are written in Objective-C. This means we'll have to define the types and enums ourselves.
+The Cocoa header files are written in Objective-C. This means we'll have to define the types and enums ourselves.
 
-The shape types can be defined like this
+The shape types can be defined as the CG Shapes like this:
 
 ```c
 typedef CGRect NSRect;
@@ -159,7 +159,8 @@ typedef CGPoint NSPoint;
 typedef CGSize NSSize;
 ```
 
-Cocoa also uses custom integer-type names
+Cocoa also uses custom integer-type names,
+these can be defined to be their matching c datatype.
 
 ```c
 typedef unsigned long NSUInteger;
