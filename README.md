@@ -2,10 +2,10 @@
 
 ## Introduction
 
-To use Apple's Cocoa API, you must use Objective-C functional calls. However, you do not have to write Objective-C code to use Objective-C.
+To use Apple's Cocoa API, you must use Objective-C function calls. However, you do not have to write Objective-C code to use Objective-C.
 Objective C can be accessed via C functions such as  `objc_msgSend`.
 
-The main reason to use Pure-C over objective C is to be able to compile your project C. This is helpful if you want to create a single-header file that does not require the user to compile using objective-C.
+The main reason to use Pure-C over objective C is to be able to compile your project in C. This is helpful if you want to create a single-header file that does not require the user to compile using objective-C.
 
 Two examples of this are: 
 
