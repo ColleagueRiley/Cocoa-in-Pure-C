@@ -523,7 +523,7 @@ if (type == 0)
 
 ```
 
-Now the event can be pushed out using [`sendEvent`](https://developer.apple.com/documentation/uikit/uiapplication/1623043-sendevent) and the window can be updated using [`updateWindows`](https://developer.apple.com/documentation/appkit/nsapplication/1428675-updatewindows)
+The event can be pushed out using [`sendEvent`](https://developer.apple.com/documentation/uikit/uiapplication/1623043-sendevent) and the window can be updated using [`updateWindows`](https://developer.apple.com/documentation/appkit/nsapplication/1428675-updatewindows)
 
 ```c
 objc_msgSend_void_id(NSApp, sel_registerName("sendEvent:"), e);
