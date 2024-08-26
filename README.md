@@ -118,7 +118,7 @@ For example to allocate the delegate class for an NSWindow:
 
 ```c
 Class delegateClass = objc_allocateClassPair(objc_getClass("NSObject"), "WindowDelegate", 0);
-``
+```
 
 For example to create a call back for NSWindow's [`windowWillResize`](https://developer.apple.com/documentation/appkit/nswindowdelegate/1419292-windowwillresize) function, you'd have to use [`class_addMethod`](https://developer.apple.com/documentation/objectivec/1418901-class_addmethod) to set it as the callback for the class.
 
