@@ -13,12 +13,14 @@ Two examples of this are:
 Both projects can be used as a reference for using Cocoa in C.
 
 ## Overview
-1) The Basics
-2) Defining types
-3) Creating a basic window 
+A quick overview of the topics the article will cover
 
-## 1. The Basic 
-Objective-C functionality can be called using [`objc_msgsend`](https://developer.apple.com/documentation/objectivec/1456712-objc_msgsend).
+1) The Basics of using Objective-C in Pure C 
+2) Defining Cocoa Types
+3) Creating a Basic Cocoa Window 
+
+## 1. The Basics of using Objective-C in 
+Objective-C functions can be called using [`objc_msgsend`](https://developer.apple.com/documentation/objectivec/1456712-objc_msgsend).
 
 Due to ABI differences, ARM uses `objc_msgsend` for all cases. However `x86_64` CPUs require the use of specific functions for floating point and structure returns. 
 [`objc_msgsend_fpret`](https://developer.apple.com/documentation/objectivec/1456697-objc_msgsend_fpret) for functions with floating point returns and 
@@ -146,7 +148,7 @@ RGFW_window* win = NULL;
 object_getInstanceVariable(self, "RGFW_window", (void*)&win);
 ```
 
-## Defining Types
+## Defining Cocoa Types
 Those were the basics of using Objective-C functions in Pure C, but that's still not enough to use the Cocoa API because the Cocoa header files are written in Objective-C. This means we'll have to define the types and enums ourselves.
 
 The shape types can be defined like this
@@ -307,7 +309,7 @@ RGFW also defines [`NSAlloc`](https://developer.apple.com/documentation/objectiv
 ```
 
 
-## 3. A basic window example
+## 3. Creating a Basic Cocoa Window
 
 Now that you understand the basics of calling Objective-C functions from C, and the setup required to use Cocoa, it's time to apply that for creating a basic window using Cocoa. 
 
