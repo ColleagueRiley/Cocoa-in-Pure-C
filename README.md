@@ -2,22 +2,20 @@
 
 ## Introduction
 
-To use Apple's Cocoa API, you must use Objective-C. However, you do not have to write Objective-C code to use Objective-C.
+To use Apple's Cocoa API, you must use Objective-C functional calls. However, you do not have to write Objective-C code to use Objective-C.
 Objective C can be accessed via C functions such as  `objc_msgSend`.
 
-There are two main reasons to want to use the Cocoa API in Pure C rather than using Objective-C.
+The main reason to use Pure-C over objective C is to be able to compile your project C. This is helpful if you want to create a single-header file that does not require the user to compile using objective-C.
 
-1) To flex about your project being Pure C.
-2) to be able to compile your project in Pure C.
+Two examples of this are: 
 
-The second only benefits single-header files, such as RGFW or Silicon.h
+[Silicon.h](https://github.com/EimaMei/Silicon) is a C-Wrapper for the Cocoa API, it wraps around the Objective-C function calls so you can use the Cocoa API in normal-looking C code.
 
-[Silicon.h](https://github.com/EimaMei/Silicon) is a C-Wrapper for the Cocoa API, it wraps around the Objective-C function calls so you can use the Cocoa API in normal looking C code.
+[RGFW](https://github.com/ColleagueRiley/RGFW) is a lightweight single-header windowing library. 
 
-[RGFW](https://github.com/ColleagueRiley/RGFW) is a lightweight single-header windowing library designed to be an alternative to GLFW. 
+Both projects can be used as a reference for using Cocoa in C.
 
 ## Overview
-
 1) The Basics
 2) Defining types
 3) Creating a basic window 
@@ -25,8 +23,7 @@ The second only benefits single-header files, such as RGFW or Silicon.h
 ## 1. The Basic 
 Objective C functionality can be called using [`objc_msgsend`](https://developer.apple.com/documentation/objectivec/1456712-objc_msgsend).
 
-
-Due to ABI differences, ARM uses `objc_msgsend` for all cases. However `x86_64` CPUs require the use of specific functions for floating point and stucture returns. 
+Due to ABI differences, ARM uses `objc_msgsend` for all cases. However `x86_64` CPUs require the use of specific functions for floating point and structure returns. 
 [`objc_msgsend_fpret`](https://developer.apple.com/documentation/objectivec/1456697-objc_msgsend_fpret) for functions with floating point returns and 
 [`objc_msgsend_fstret`](https://developer.apple.com/documentation/objectivec/1456730-objc_msgsend_stret) for functions that return a structure. 
 
@@ -51,7 +48,7 @@ When you use `objc_msgSend`, you have to cast the function based on the return a
 
 For example: `((int (*)(id, SEL, int))objc_msgSend)` for a function that takes an int argument and returns an int. 
 
-To avoid repeating commonly required casting, RGFW defines uses macros to handle common cases. 
+To avoid repeating commonly used type-casting, RGFW defines macros to handle common cases. 
 
 ```c
 #define objc_msgSend_id				((id (*)(id, SEL))objc_msgSend)
@@ -76,7 +73,7 @@ To avoid repeating commonly required casting, RGFW defines uses macros to handle
 
 You might notice two common arguments in these functions `id, SEL`
 
-The [`id`](https://developer.apple.com/documentation/objectivec/id) argument refers to a ID to an Objective C object or class. 
+The [`id`](https://developer.apple.com/documentation/objectivec/id) argument refers to an ID to an Objective C object or class. 
 
 [`SEL`](https://developer.apple.com/documentation/objectivec/sel) refers to the function's selector. 
 
@@ -89,21 +86,21 @@ looks like
 `id* bar = [id SEL:@"RGFW"];`
 
 
-To get the ID to a objective C class you must run [`objc_getClass`](https://developer.apple.com/documentation/objectivec/1418952-objc_getclass)
+To get the ID to an Objective-C class you must run [`objc_getClass`](https://developer.apple.com/documentation/objectivec/1418952-objc_getclass)
 
 For example: `objc_getClass("NSWindow");`
 
-To get the selector for a objective C funtion you must use [`sel_registerName`](https://developer.apple.com/documentation/objectivec/1418557-sel_registername)
+To get the selector for an Objective-C function you must use [`sel_registerName`](https://developer.apple.com/documentation/objectivec/1418557-sel_registername)
 
-To use this, you may need to understand the syntax of a objective-c function.
+To use this, you may need to understand the syntax of an Objective-C function.
 
-The syntax is like this `<function-name>`, then `:` is used for a place holder for an argument.
+The syntax is like this `<function-name>`, then `:` is used as a place holder for an argument.
 
-For example a function with one argument would look like this:
+For example, a function with one argument would look like this:
 
 `sel_registerName("makeKeyAndOrderFront:");`
 
-However a function with no arguments would look like this.
+However, a function with no arguments would look like this.
 
 `sel_registerName("isKeyWindow");`
 
@@ -112,12 +109,12 @@ If the function has multiple arguments you will have to also add the argument na
 `sel_registerName("initWithContentRect:styleMask:backing:defer:");`
 
 To define a class method (eg. a callback function for the object) you must use [`class_addMethod`](https://developer.apple.com/documentation/objectivec/1418901-class_addmethod) this function takes the [delegate class](https://developer.apple.com/documentation/uikit/uisceneconfiguration/3197948-delegateclass?changes=_4) (class of the object that is calling's [delegate](https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/DelegatesandDataSources/DelegatesandDataSources.html) 
-), selector of the function being called, your function you want to be called and the arguments expected in string format.
+), selector of the function being called, the function you want to be called, and the arguments expected in string format.
 
-But first you must allocate the delegate class in order to access it.
+But first, you must allocate the delegate class in order to access it.
 You can do this using [`objc_allocateClassPair`](https://developer.apple.com/documentation/objectivec/1418559-objc_allocateclasspair).
 
-For example to allocate the delgeate class for an NSWindow: 
+For example to allocate the delegate class for an NSWindow: 
 
 ```c
 Class delegateClass = objc_allocateClassPair(objc_getClass("NSObject"), "WindowDelegate", 0);
@@ -131,7 +128,7 @@ class_addMethod(delegateClass, sel_registerName("windowWillResize:toSize:"), (IM
 
 You can also add custom user variables to the class, these can be used to attach user data to the class.
 
-For example, RGFW attaches a `RGFW_window` to the NSWindow class to modify the `RGFW_window*` data. This can be done using [`class_addIvar`](https://developer.apple.com/documentation/objectivec/1418756-class_addivar)
+For example, RGFW attaches an `RGFW_window` to the NSWindow class to modify the `RGFW_window*` data. This can be done using [`class_addIvar`](https://developer.apple.com/documentation/objectivec/1418756-class_addivar)
 
 ```c
 class_addIvar(
@@ -170,7 +167,7 @@ typedef CGPoint NSPoint;
 typedef CGSize NSSize;
 ```
 
-Cocoa also uses custom integer type names
+Cocoa also uses custom integer-type names
 
 ```c
 typedef unsigned long NSUInteger;
@@ -329,7 +326,7 @@ First, some library headers are required.
 #include <string.h>
 ```
 
-There's also declare some functions that will be defined later.
+There are also declare some functions that will be defined later.
 
 These functions will be used for printing information about the current event.
 
@@ -432,7 +429,7 @@ This is so that way the program doesn't keep running after the window is closed.
 class_addMethod(objc_getClass("NSObject"), sel_registerName("windowShouldClose:"), (IMP) onClose, 0);
 ```
 
-Next the NSApplication is setup. In macOS, each program has it's own [NSApplication](https://developer.apple.com/documentation/appkit/nsapplication) structure which all it's subwindows are connected to.
+Next, the NSApplication is set up. In macOS, each program has its own [NSApplication](https://developer.apple.com/documentation/appkit/nsapplication) structure to which all its subwindows are connected.
 
 This requires the use of [`sharedApplication`](https://developer.apple.com/documentation/appkit/nsapplication/1428360-sharedapplication) and [`setActivationPolicy`](https://developer.apple.com/documentation/appkit/nsapplication/1428621-setactivationpolicy)
 
@@ -457,7 +454,7 @@ NSWindow* window = ((id (*)(id, SEL, NSRect, NSWindowStyleMask, NSBackingStoreTy
 ```
 
 
-You can then setup the selegate class and window resize callback.
+You can then set up the delegate class and window resize callback.
 
 ```c
 Class delegateClass = objc_allocateClassPair(objc_getClass("NSObject"), "WindowDelegate", 0);
@@ -471,9 +468,9 @@ class_addIvar(
 class_addMethod(delegateClass, sel_registerName("windowWillResize:toSize:"), (IMP) windowResize, "{NSSize=ff}@:{NSSize=ff}");
 ```
 
-After that, the delegate must be initalizated using [`init`]()https://developer.apple.com/documentation/objectivec/nsobject/1418641-init
+After that, the delegate must be initialized using [`init`]()https://developer.apple.com/documentation/objectivec/nsobject/1418641-init
 
-Then I will set the delegate's variable data as our NSWindow and set the NSWindow's delegate to be the delegate we initalized using [`setDelegate`](https://developer.apple.com/documentation/foundation/nsmachport/1399547-setdelegate)
+Then I will set the delegate's variable data as our NSWindow and set the NSWindow's delegate to be the delegate we initialized using [`setDelegate`](https://developer.apple.com/documentation/foundation/nsmachport/1399547-setdelegate)
 
 ```c
 id delegate = objc_msgSend_id(NSAlloc(delegateClass), sel_registerName("init"));
@@ -495,7 +492,7 @@ objc_msgSend_void_bool(window, sel_registerName("setIsVisible:"), true);
 objc_msgSend_void(NSApp, sel_registerName("finishLaunching"));
 ```
 
-Now, in the draw loop I'd start by creating a memory pool.
+Now, in the draw loop, I'd start by creating a memory pool.
 
 This is so that way all memory allocated by event checking can be freed at once, avoiding a memory leak.
 
@@ -508,9 +505,9 @@ id pool = objc_msgSend_id(NSAlloc(objc_getClass("NSAutoreleasePool")), sel_regis
 
 Now the current event can be checked using an [`NSEvent`](https://developer.apple.com/documentation/appkit/nsevent) object and [`nextEventMatchingMask`](https://developer.apple.com/documentation/appkit/nsapplication/1428485-nexteventmatchingmask)
 
-The event type can get found using [`type`](https://developer.apple.com/documentation/appkit/nsevent/1528439-type)
+The event type can be found using [`type`](https://developer.apple.com/documentation/appkit/nsevent/1528439-type)
 The event mouse point can be found using [`locationInWindow`](https://developer.apple.com/documentation/appkit/nsevent/1529068-locationinwindow)
-The event modifierFlags can be found using [`modifierFlags`](https://developer.apple.com/documentation/appkit/nsevent/1534405-modifierflags
+The event modifier flags can be found using [`modifierFlags`](https://developer.apple.com/documentation/appkit/nsevent/1534405-modifierflags
 
 ```c
 NSEvent* e = (NSEvent*) ((id(*)(id, SEL, NSEventMask, void*, NSString*, bool))objc_msgSend) (NSApp, sel_registerName("nextEventMatchingMask:untilDate:inMode:dequeue:"), ULONG_MAX, NULL,                           ((id(*)(id, SEL, const char*))objc_msgSend) ((id)objc_getClass("NSString"), sel_registerName("stringWithUTF8String:"), "kCFRunLoopDefaultMode"), true);
@@ -520,7 +517,7 @@ unsigned int type = objc_msgSend_uint(e, sel_registerName("type"));
 NSPoint p = ((NSPoint(*)(id, SEL)) objc_msgSend)(e, sel_registerName("locationInWindow"));
 ```
 
-Before I check the event, I make sure there actually is an event.
+Before I check the event, I make sure there is an event.
 
 
 ```c
