@@ -428,7 +428,7 @@ NSApplication* NSApp = objc_msgSend_id((id)objc_getClass("NSApplication"), sel_r
 objc_msgSend_void_id(NSApp, sel_registerName("setActivationPolicy:"), NSApplicationActivationPolicyRegular);
 ```
 
-Next a [NSWindow](https://developer.apple.com/documentation/appkit/nswindow) can be created, I broke the window creation process into three steps so it's more readable.
+Now you can create a [NSWindow](https://developer.apple.com/documentation/appkit/nswindow) can be created, I broke the window creation process into three steps so it's more readable.
 
 The window is created using [`initWithContentRect`](https://developer.apple.com/documentation/appkit/nswindow/1419477-init)
 
