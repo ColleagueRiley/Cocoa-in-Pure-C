@@ -424,7 +424,7 @@ This is so that way the program doesn't keep running after the window is closed.
 class_addMethod(objc_getClass("NSObject"), sel_registerName("windowShouldClose:"), (IMP) onClose, 0);
 ```
 
-Next, the NSApplication is set up. In macOS, each program has its own [NSApplication](https://developer.apple.com/documentation/appkit/nsapplication) structure to which all its subwindows are connected.
+Next, the [NSApplication](https://developer.apple.com/documentation/appkit/nsapplication) is set up.
 
 This requires the use of [`sharedApplication`](https://developer.apple.com/documentation/appkit/nsapplication/1428360-sharedapplication) and [`setActivationPolicy`](https://developer.apple.com/documentation/appkit/nsapplication/1428621-setactivationpolicy)
 
