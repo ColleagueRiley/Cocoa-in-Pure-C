@@ -104,7 +104,7 @@ However, a function with no arguments would look like this.
 
 `sel_registerName("isKeyWindow");`
 
-If the function has multiple arguments you will have to also add the argument name for the arguments (not including the first argument)
+If the function has multiple arguments you will have to also add the argument names (not including the first argument)
 
 `sel_registerName("initWithContentRect:styleMask:backing:defer:");`
 
@@ -120,7 +120,9 @@ For example to allocate the delegate class for an NSWindow:
 Class delegateClass = objc_allocateClassPair(objc_getClass("NSObject"), "WindowDelegate", 0);
 ```
 
-For example to create a call back for NSWindow's [`windowWillResize`](https://developer.apple.com/documentation/appkit/nswindowdelegate/1419292-windowwillresize) function, you'd have to use [`class_addMethod`](https://developer.apple.com/documentation/objectivec/1418901-class_addmethod) to set it as the callback for the class.
+To create a call back you have to use [`class_addMethod`](https://developer.apple.com/documentation/objectivec/1418901-class_addmethod) to set it as the callback for the class.
+
+For example to create a call back for NSWindow's [`windowWillResize`](https://developer.apple.com/documentation/appkit/nswindowdelegate/1419292-windowwillresize)
 
 ```c
 class_addMethod(delegateClass, sel_registerName("windowWillResize:toSize:"), (IMP) windowResize, "{NSSize=ff}@:{NSSize=ff}");
