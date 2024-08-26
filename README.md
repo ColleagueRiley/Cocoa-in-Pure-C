@@ -30,7 +30,7 @@ RGFW handles this like this:
 
 ```c
 #include <objc/runtime.h>
-#inclued <objc/message.h> 
+#include <objc/message.h> 
 
 #ifdef __arm64__
 /* ARM just uses objc_msgSend */
