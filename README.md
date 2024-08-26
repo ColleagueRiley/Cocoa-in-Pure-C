@@ -4,7 +4,7 @@
 
 To use Apple's Cocoa API, you must use Objective-C function calls. However, you do not have to write Objective-C code because Objective-C can be accessed via C functions such as  `objc_msgSend`.
 
-The main reason to use Pure-C over objective C is to be able to compile your project in C. This is helpful if you want to create a single-header file that does not require the user to compile using objective-C.
+The main reason to use Pure-C over Objective-C is to be able to compile your project in C. This is helpful if you want to create a single-header file that does not require the user to compile using Objective-C.
 
 Two examples of this are: 
 
@@ -18,7 +18,7 @@ Both projects can be used as a reference for using Cocoa in C.
 3) Creating a basic window 
 
 ## 1. The Basic 
-Objective C functionality can be called using [`objc_msgsend`](https://developer.apple.com/documentation/objectivec/1456712-objc_msgsend).
+Objective-C functionality can be called using [`objc_msgsend`](https://developer.apple.com/documentation/objectivec/1456712-objc_msgsend).
 
 Due to ABI differences, ARM uses `objc_msgsend` for all cases. However `x86_64` CPUs require the use of specific functions for floating point and structure returns. 
 [`objc_msgsend_fpret`](https://developer.apple.com/documentation/objectivec/1456697-objc_msgsend_fpret) for functions with floating point returns and 
@@ -70,7 +70,7 @@ To avoid repeating commonly used type-casting, RGFW defines macros to handle com
 
 You might notice two common arguments in these functions, `id` and `SEL`
 
-The [`id`](https://developer.apple.com/documentation/objectivec/id) argument refers to an ID of an Objective C object or class. 
+The [`id`](https://developer.apple.com/documentation/objectivec/id) argument refers to an ID of an Objective-C object or class. 
 
 [`SEL`](https://developer.apple.com/documentation/objectivec/sel) refers to the function's selector. 
 
@@ -148,7 +148,7 @@ object_getInstanceVariable(self, "RGFW_window", (void*)&win);
 
 ## Defining Types
 
-The Cocoa header files are written in Objective C. This means we'll have to define the types and enums ourself.
+The Cocoa header files are written in Objective-C. This means we'll have to define the types and enums ourself.
 
 The shape types can be defined like this
 
