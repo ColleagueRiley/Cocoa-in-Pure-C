@@ -177,10 +177,12 @@ typedef long NSInteger;
 While object types can all be defined as being an `id`.
 
 ```c
-typedef id NSEvent;
-typedef id NSString;
-typedef id NSWindow;	
-typedef id NSApplication;
+// Note: void is being used here 
+// type* can be used ( type* == void* == id ) 
+typedef void NSEvent;
+typedef void NSString;
+typedef void NSWindow;	
+typedef void NSApplication;
 ```
 
 
@@ -190,7 +192,7 @@ Many of the other enums can be found in Cocoa's headers, documentation, RGFW.h, 
 
 ```c
 /* this macro is used to give an enum a type */ 
-#define NS_ENUM(type, name) typedef type name; enum name
+#define NS_ENUM(type, name) type name; enum
 
 typedef NS_ENUM(NSUInteger, NSWindowStyleMask) {
 	NSWindowStyleMaskBorderless = 0,
@@ -366,12 +368,14 @@ char* ns_strcat(register char *s, register const char *append) {
 	char *save = s;
 
 	for (; *s; ++s);
-	while (*s++ = *append++);
+	while ((*s++ = *append++));
 	return save;
 }
 
 const char* NSEventModifierFlagsToChar(NSEventModifierFlags modifierFlags) {
-	char result[100];
+	static char result[100];
+    result[0] = '\0';
+
 	if ((modifierFlags & NSEventModifierFlagCapsLock) == NSEventModifierFlagCapsLock) ns_strcat(result, "CapsLock, ");
 	if ((modifierFlags & NSEventModifierFlagShift) == NSEventModifierFlagShift) ns_strcat(result, "NShift, ");
 	if ((modifierFlags & NSEventModifierFlagControl) == NSEventModifierFlagControl) ns_strcat(result, "Control, ");
@@ -429,7 +433,7 @@ Next, the [NSApplication](https://developer.apple.com/documentation/appkit/nsapp
 This requires the use of [`sharedApplication`](https://developer.apple.com/documentation/appkit/nsapplication/1428360-sharedapplication) and [`setActivationPolicy`](https://developer.apple.com/documentation/appkit/nsapplication/1428621-setactivationpolicy)
 
 ```c
-NSApplication* NSApp = objc_msgSend_id(objc_getClass("NSApplication"), sel_registerName("sharedApplication"));
+NSApplication* NSApp = objc_msgSend_id((id)objc_getClass("NSApplication"), sel_registerName("sharedApplication"));
 objc_msgSend_void_id(NSApp, sel_registerName("setActivationPolicy:"), NSApplicationActivationPolicyRegular);
 ```
 
@@ -561,15 +565,15 @@ typedef CGRect NSRect;
 typedef CGPoint NSPoint;
 typedef CGSize NSSize;
 
-typedef id NSEvent;
-typedef id NSString;
-typedef id NSWindow;	
-typedef id NSApplication;
+typedef void NSEvent;
+typedef void NSString;
+typedef void NSWindow;	
+typedef void NSApplication;
 
 typedef unsigned long NSUInteger;
 typedef long NSInteger;
 
-#define NS_ENUM(type, name) typedef type name; enum name
+#define NS_ENUM(type, name) type name; enum 
 
 typedef NS_ENUM(NSUInteger, NSWindowStyleMask) {
 	NSWindowStyleMaskBorderless = 0,
@@ -746,8 +750,8 @@ const char* NSEventModifierFlagsToChar(NSEventModifierFlags modifierFlags);
 int main(int argc, char* argv[]) {
 	class_addMethod(objc_getClass("NSObject"), sel_registerName("windowShouldClose:"), (IMP) onClose, 0);
 
-	NSApplication* NSApp = objc_msgSend_id(objc_getClass("NSApplication"), sel_registerName("sharedApplication"));
-	objc_msgSend_void_id(NSApp, sel_registerName("setActivationPolicy:"), NSApplicationActivationPolicyRegular);
+	NSApplication* NSApp = objc_msgSend_id((id)objc_getClass("NSApplication"), sel_registerName("sharedApplication"));
+	objc_msgSend_void_int(NSApp, sel_registerName("setActivationPolicy:"), NSApplicationActivationPolicyRegular);
 
 	NSBackingStoreType macArgs = NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSBackingStoreBuffered | NSWindowStyleMaskTitled | NSWindowStyleMaskResizable;
 
@@ -837,12 +841,14 @@ char* ns_strcat(register char *s, register const char *append) {
 	char *save = s;
 
 	for (; *s; ++s);
-	while (*s++ = *append++);
+	while ((*s++ = *append++));
 	return save;
 }
 
 const char* NSEventModifierFlagsToChar(NSEventModifierFlags modifierFlags) {
-	char result[100];
+	static char result[100];
+	result[0] = '\0';
+
 	if ((modifierFlags & NSEventModifierFlagCapsLock) == NSEventModifierFlagCapsLock) ns_strcat(result, "CapsLock, ");
 	if ((modifierFlags & NSEventModifierFlagShift) == NSEventModifierFlagShift) ns_strcat(result, "NShift, ");
 	if ((modifierFlags & NSEventModifierFlagControl) == NSEventModifierFlagControl) ns_strcat(result, "Control, ");
