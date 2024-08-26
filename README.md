@@ -19,7 +19,7 @@ A quick overview of the topics the article will cover
 2) Defining Cocoa Types
 3) Creating a Basic Cocoa Window 
 
-## 1. The Basics of using Objective-C in 
+## 1. The Basics of using Objective-C in Pure C
 Objective-C functions can be called using [`objc_msgsend`](https://developer.apple.com/documentation/objectivec/1456712-objc_msgsend).
 
 Due to ABI differences, ARM uses `objc_msgsend` for all cases. However `x86_64` CPUs require the use of specific functions for floating point and structure returns. 
