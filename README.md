@@ -2,16 +2,13 @@
 
 ## Introduction
 
-To use Apple's Cocoa API, you must use Objective-C function calls. However, you do not have to write Objective-C code to use Objective-C.
-Objective C can be accessed via C functions such as  `objc_msgSend`.
+To use Apple's Cocoa API, you must use Objective-C function calls. However, you do not have to write Objective-C code because Objective-C can be accessed via C functions such as  `objc_msgSend`.
 
 The main reason to use Pure-C over objective C is to be able to compile your project in C. This is helpful if you want to create a single-header file that does not require the user to compile using objective-C.
 
 Two examples of this are: 
 
-[Silicon.h](https://github.com/EimaMei/Silicon) is a C-Wrapper for the Cocoa API, it wraps around the Objective-C function calls so you can use the Cocoa API in normal-looking C code.
-
-[RGFW](https://github.com/ColleagueRiley/RGFW) is a lightweight single-header windowing library. 
+[Silicon.h](https://github.com/EimaMei/Silicon), a C-Wrapper for the Cocoa API that wraps around the Objective-C function calls so you can use the Cocoa API in normal-looking C code, and [RGFW](https://github.com/ColleagueRiley/RGFW), a lightweight single-header windowing library. 
 
 Both projects can be used as a reference for using Cocoa in C.
 
@@ -71,19 +68,13 @@ To avoid repeating commonly used type-casting, RGFW defines macros to handle com
 #define objc_msgSend_id_char_const	((id (*)(id, SEL, char const *))objc_msgSend)
 ```
 
-You might notice two common arguments in these functions `id, SEL`
+You might notice two common arguments in these functions, `id` and `SEL`
 
 The [`id`](https://developer.apple.com/documentation/objectivec/id) argument refers to an ID of an Objective C object or class. 
 
 [`SEL`](https://developer.apple.com/documentation/objectivec/sel) refers to the function's selector. 
 
-For example, 
-
-`MyObject *bar = [MyObject objectWithString:@"RGFW"];`
-
-looks like
-
-`id* bar = [id SEL:@"RGFW"];`
+For example `MyObject *bar = [MyObject objectWithString:@"RGFW"];` can be translated to `id* bar = [id SEL:@"RGFW"];`
 
 
 To get the ID to an Objective-C class you must run [`objc_getClass`](https://developer.apple.com/documentation/objectivec/1418952-objc_getclass)
@@ -92,11 +83,9 @@ For example: `objc_getClass("NSWindow");`
 
 To get the selector for an Objective-C function you must use [`sel_registerName`](https://developer.apple.com/documentation/objectivec/1418557-sel_registername)
 
-To use this, you may need to understand the syntax of an Objective-C function.
+The syntax of Objective-C functions is like this `<function-name>`, then `:` is used as a placeholder for an argument.
 
-The syntax is like this `<function-name>`, then `:` is used as a placeholder for an argument.
-
-For example, a function with one argument would look like this:
+A function with one argument would look like this:
 
 `sel_registerName("makeKeyAndOrderFront:");`
 
@@ -122,7 +111,7 @@ Class delegateClass = objc_allocateClassPair(objc_getClass("NSObject"), "WindowD
 
 To create a call back you have to use [`class_addMethod`](https://developer.apple.com/documentation/objectivec/1418901-class_addmethod) to set it as the callback for the class.
 
-For example to create a call back for NSWindow's [`windowWillResize`](https://developer.apple.com/documentation/appkit/nswindowdelegate/1419292-windowwillresize)
+Creating  a call back for NSWindow's [`windowWillResize`](https://developer.apple.com/documentation/appkit/nswindowdelegate/1419292-windowwillresize) would look like this:
 
 ```c
 class_addMethod(delegateClass, sel_registerName("windowWillResize:toSize:"), (IMP) windowResize, "{NSSize=ff}@:{NSSize=ff}");
@@ -144,7 +133,7 @@ To set the variable to use for your NSWindow instance, use
 
 [`object_setInstanceVariable`](https://developer.apple.com/documentation/objectivec/1441498-object_setinstancevariable)
 
-For example, to set the `RGFW_window` object to be the variable instance for its NSWindow object:
+To set the `RGFW_window` object to be the variable instance for its NSWindow object:
 
 `object_setInstanceVariable(delegate, "NSWindow", window);`
 
