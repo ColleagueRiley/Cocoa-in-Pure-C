@@ -159,7 +159,7 @@ object_getInstanceVariable(self, "RGFW_window", (void*)&win);
 
 ## Defining Types
 
-The Cocoa header files are written in Objective C. This means we'll have to define the types and enums ourselves.
+The Cocoa header files are written in Objective C. This means we'll have to define the types and enums ourself.
 
 The shape types can be defined like this
 
@@ -176,7 +176,7 @@ typedef unsigned long NSUInteger;
 typedef long NSInteger;
 ```
 
-While object types can all be defined as being an `id`.
+You can also define Cocoa objects. I define them as void so I can use them as pointers.
 
 ```c
 // Note: void is being used here 
