@@ -458,7 +458,7 @@ class_addIvar(
 class_addMethod(delegateClass, sel_registerName("windowWillResize:toSize:"), (IMP) windowResize, "{NSSize=ff}@:{NSSize=ff}");
 ```
 
-After that, the delegate must be initialized using [`init`]()https://developer.apple.com/documentation/objectivec/nsobject/1418641-init
+After that, the delegate must be initialized using [`init`](https://developer.apple.com/documentation/objectivec/nsobject/1418641-init)
 
 Then I will set the delegate's variable data as our NSWindow and set the NSWindow's delegate to be the delegate we initialized using [`setDelegate`](https://developer.apple.com/documentation/foundation/nsmachport/1399547-setdelegate)
 
@@ -497,7 +497,7 @@ Now the current event can be checked using an [`NSEvent`](https://developer.appl
 
 The event type can be found using [`type`](https://developer.apple.com/documentation/appkit/nsevent/1528439-type)
 The event mouse point can be found using [`locationInWindow`](https://developer.apple.com/documentation/appkit/nsevent/1529068-locationinwindow)
-The event modifier flags can be found using [`modifierFlags`](https://developer.apple.com/documentation/appkit/nsevent/1534405-modifierflags
+The event modifier flags can be found using [`modifierFlags`](https://developer.apple.com/documentation/appkit/nsevent/1534405-modifierflags)
 
 ```c
 NSEvent* e = (NSEvent*) ((id(*)(id, SEL, NSEventMask, void*, NSString*, bool))objc_msgSend) (NSApp, sel_registerName("nextEventMatchingMask:untilDate:inMode:dequeue:"), ULONG_MAX, NULL,                           ((id(*)(id, SEL, const char*))objc_msgSend) ((id)objc_getClass("NSString"), sel_registerName("stringWithUTF8String:"), "kCFRunLoopDefaultMode"), true);
