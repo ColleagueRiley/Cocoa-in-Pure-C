@@ -15,7 +15,7 @@ Both projects can be used as a reference for using Cocoa in C.
 ## Overview
 A quick overview of the topics the article will cover
 
-1) The Basics of using Objective-C in Pure C 
+1) The Basics of Using Objective-C in Pure C 
 2) Defining Cocoa Types
 3) Creating a Basic Cocoa Window 
 
