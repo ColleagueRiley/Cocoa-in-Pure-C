@@ -41,7 +41,7 @@ RGFW handles this like this:
 #endif
 ```
 
-When you use `objc_msgSend`, you have to cast the function based on the return and argument types you want.
+`objc_msgSend` is a generic function, so its type must be cast based on the return and argument types you want.
 
 For example: `((int (*)(id, SEL, int))objc_msgSend)` for a function that takes an int argument and returns an int. 
 
@@ -147,8 +147,7 @@ object_getInstanceVariable(self, "RGFW_window", (void*)&win);
 ```
 
 ## Defining Types
-
-The Cocoa header files are written in Objective-C. This means we'll have to define the types and enums ourself.
+Those were the basics of using Objective-C functions in Pure C, but that's still not enough to use the Cocoa API because the Cocoa header files are written in Objective-C. This means we'll have to define the types and enums ourselves.
 
 The shape types can be defined like this
 
@@ -309,6 +308,8 @@ RGFW also defines [`NSAlloc`](https://developer.apple.com/documentation/objectiv
 
 
 ## 3. A basic window example
+
+Now that you understand the basics of calling Objective-C functions from C, and the setup required to use Cocoa, it's time to apply that for creating a basic window using Cocoa. 
 
 First, some library headers are required. 
 
